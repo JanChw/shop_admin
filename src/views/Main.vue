@@ -1,14 +1,15 @@
 <template>
   <el-container>
-    <el-aside width="200px">
-      <slot name="aside"></slot>
+    <el-aside>
+      <!-- <slot name="aside"></slot> -->
+      <CommonMenu />
     </el-aside>
     <el-container>
       <el-header>
         <CommonHeader />
       </el-header>
       <el-main>
-        <slot></slot>
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -16,9 +17,11 @@
 
 <script>
 import CommonHeader from '../components/CommonHeader'
+import CommonMenu from '../components/CommonMenu'
 export default {
   components: {
-    CommonHeader
+    CommonHeader,
+    CommonMenu
   },
   data () {
     return {}
@@ -26,9 +29,13 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .el-main {
     margin: 20px;
     background: white;
+  }
+
+  .el-aside {
+    width: auto!important;
   }
 </style>

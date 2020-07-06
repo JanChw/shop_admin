@@ -9,13 +9,13 @@
         </router-link>
       </span>
       <ul class="submenu" v-if="menu.children">
-        <li v-for="(subMenu, subIndex) in menu.children" :key="index + '-' + subIndex">{{ subMenu.label }}</li>
+        <li v-for="(subMenu, subIndex) in menu.children" :key="index + '-' + subIndex"><router-link :to="subMenu.path || '/'" tag="span">{{ subMenu.label }}</router-link></li>
       </ul>
     </el-tab-pane>
   </el-tabs>
   </div>
 </template>
-
+// todo tabs加动画
 <script>
 export default {
   data () {
@@ -29,19 +29,19 @@ export default {
         {
           label: '商品',
           icon: 'goods',
-          path: '',
+          path: '/goods',
           children: [
             {
               label: '商品管理',
-              path: ''
+              path: '/goods'
             },
             {
               label: '产品管理',
-              path: ''
+              path: '/product'
             },
             {
               label: '分类管理',
-              path: ''
+              path: '/category'
             },
             {
               label: '品牌管理',
@@ -53,10 +53,6 @@ export default {
             },
             {
               label: '属性管理',
-              path: ''
-            },
-            {
-              label: '属性值管理',
               path: ''
             }
           ]
@@ -96,13 +92,17 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+  },
+  mounted () {
   }
 }
 </script>
 
 <style lang="scss">
   .menu {
-    height: 100vh;
+    height: 100%;
     background: $main-color2;
     .el-tabs--left .el-tabs__header.is-left {
       margin-right: 0;
@@ -126,7 +126,7 @@ export default {
       box-sizing: border-box;
       background: white;
       color: darken($main-color4, 50);
-      height: 100vh;
+      height: 100%;
       margin: 0 auto;
       padding-top: 20px;
       list-style: none;

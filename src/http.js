@@ -7,6 +7,7 @@ axios.interceptors.request.use((config) => {
   const common = config.headers.common
   if (token && !Object.prototype.hasOwnProperty.call(common, 'Authorization')) {
     common.Authorization = `Bearer ${token}`
+    common.service = 'backend'
   }
   return config
 }, (err) => {
