@@ -104,6 +104,13 @@ export default {
   .menu {
     height: 100%;
     background: $main-color2;
+    .el-tabs {
+      height: 100%;
+      .el-tabs__content {
+        height: 100%;
+        background-color: white;
+      }
+    }
     .el-tabs--left .el-tabs__header.is-left {
       margin-right: 0;
       padding-top: 20px;
@@ -124,7 +131,6 @@ export default {
 
     .submenu {
       box-sizing: border-box;
-      background: white;
       color: darken($main-color4, 50);
       height: 100%;
       margin: 0 auto;

@@ -36,6 +36,7 @@ export default {
   }
 
   .el-aside {
+    // height: 100%;
     width: auto!important;
   }
 </style>

@@ -1,5 +1,9 @@
 <template>
-  <HelloWorld />
+  <div>
+    <HelloWorld :msg="message" @handleEmit="emitFun"/>
+    <p>{{childSignal}}</p>
+    <p><input type="text" v-model="message"></p>
+  </div>
 </template>
 
 <script>
@@ -10,6 +14,17 @@ export default {
   name: 'Home',
   components: {
     HelloWorld
+  },
+  data () {
+    return {
+      message: 'hello world',
+      childSignal: 'hi'
+    }
+  },
+  methods: {
+    emitFun (payload) {
+      this.childSignal = payload
+    }
   }
 }
 </script>
