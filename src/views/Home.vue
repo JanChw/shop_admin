@@ -3,6 +3,8 @@
     <HelloWorld :msg="message" @handleEmit="emitFun"/>
     <p>{{childSignal}}</p>
     <p><input type="text" v-model="message"></p>
+    <br>
+    <CustomForm />
   </div>
 </template>
 

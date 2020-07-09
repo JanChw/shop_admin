@@ -2,11 +2,27 @@
   <div class="goods">
     <p>商品管理</p>
       <CommonForm
-      :formFields="fields"
+      :formFields="searchFields"
       :formData="searchForm"
       :inline="true"
       @search="handleSearch"
       ></CommonForm>
+    <el-dialog
+      title="编辑商品"
+      :visible.sync="dialogVisible"
+      width="80%"
+      >
+      <CommonForm
+      :formFields="goodsFields"
+      :formData="goodsForm"
+      :uploadUrl="uploadUrl"
+      :allowedImageTypes="allowedImageTypes"
+      ></CommonForm>
+      <span slot="footer">
+        <el-button @click=" dialogVisible= false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = true">确 定</el-button>
+      </span>
+    </el-dialog>
 
     <CommonTable
       :columns="columns"
@@ -16,6 +32,7 @@
       @current-change="handleCurrentChange"
       @size-change="handleSizeChange"
       @switch="handleSwitch"
+      @edit="handleEdit"
       @del="handleDelete"
       @dels="handleDels"
       @on-sales="handleOnSales"
@@ -35,7 +52,7 @@ export default {
         currentPage: 1,
         pageSize: 10
       },
-      fields: [
+      searchFields: [
         {
           label: '名称',
           prop: 'name',
@@ -111,6 +128,82 @@ export default {
         tagPrice: '',
         maxPrice: ''
       },
+      goodsFields: [
+        {
+          label: '名称',
+          prop: 'name',
+          type: 'input'
+        },
+        {
+          label: '分类',
+          prop: 'category',
+          type: 'select',
+          options: [
+            {
+              label: '零食',
+              value: 1
+            },
+            {
+              label: '饮料',
+              value: 2
+            }
+          ]
+        },
+        {
+          label: '品牌',
+          prop: 'brand',
+          type: 'select',
+          options: [
+            {
+              label: '可口可乐',
+              value: 1
+            },
+            {
+              label: '乐事',
+              value: 2
+            }
+          ]
+        },
+        {
+          label: '标签',
+          prop: 'tag',
+          type: 'select',
+          options: [
+            {
+              label: '薯片',
+              value: 1
+            },
+            {
+              label: '辣条',
+              value: 2
+            }
+          ]
+        },
+        {
+          label: '文件上传',
+          prop: 'primary_pic_url',
+          type: 'file'
+        },
+        {
+          label: '商品简要',
+          prop: 'goods_brief',
+          type: 'textarea'
+        },
+        {
+          label: '商品详情',
+          prop: 'goods_desc',
+          type: 'editor'
+        }
+      ],
+      goodsForm: {
+        name: '',
+        category: '',
+        brand: '',
+        tag: '',
+        primary_pic_url: '',
+        goods_brief: '',
+        goods_desc: ''
+      },
       columns: [
         {
           label: '序号',
@@ -144,6 +237,9 @@ export default {
           type: 'date'
         }
       ],
+      uploadUrl: 'http://localhost:8080/api/upload',
+      allowedImageTypes: ['jpeg', 'jpg', 'png', 'webp'],
+      dialogVisible: false,
       goods: [],
       total: 0
     }
@@ -154,8 +250,9 @@ export default {
   },
   methods: {
     async getGoods (params = {}) {
-      const [data, total] = await this.$http.get('/api/goods', { params })
-      this.goods = data
+      const { data } = await this.$http.get('/api/goods', { params })
+      const [goods, total] = data
+      this.goods = goods
       this.pager.total = total
     },
     async handleSwitch (row) {
@@ -164,6 +261,7 @@ export default {
       await this.getGoods()
     },
     handleEdit (index, row) {
+      this.dialogVisible = true
       console.log(index, row)
     },
     handleDelete (row) {
@@ -208,7 +306,20 @@ export default {
 }
 </script>
 
-<style  lang="scss" scoped>
+<style  lang="scss">
   .goods {
+    .el-dialog {
+      .form {
+      .el-form-item {
+        width: 34%;
+      }
+      .textarea {
+        width: 50%;
+      }
+      .editor {
+        width: 100%;
+      }
+    }
+    }
   }
 </style>
